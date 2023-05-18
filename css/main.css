@@ -1,0 +1,99 @@
+/*! HTML5 Boilerplate v6.0.1 | MIT License | https://html5boilerplate.com/ */
+
+/*
+ * What follows is the result of much research on cross-browser styling.
+ * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
+ * Kroc Camen, and the H5BP dev community and team.
+ */
+
+/* ==========================================================================
+   Base styles: opinionated defaults
+   ========================================================================== */
+
+html {
+    color: #222;
+    font-size: 1em;
+    background-color: #f8f8f9;
+}
+body {
+    max-width: 480px;
+    min-width: 480px;
+    margin:0 auto;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+
+}
+
+h1, h2, h3, h4, h5, h6 {
+    text-align: center;
+    color: #3C3C5C;
+
+    margin-block-start: 0em;
+    margin-block-end: 0.3em;
+}
+p {font-size: 18px;}
+
+
+.container_top {
+    position: relative;
+}
+
+
+
+.background_top_img {
+
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+}
+.btn_menu, .btn_chat {
+    position: absolute;
+    left: 30px;
+    top: 30px;
+    width: 30px;
+    height: 30px;
+}
+.btn_chat {
+    right: 30px;
+    left: unset;
+}
+
+
+.container_content {
+    margin-left:  15px;
+    margin-right: 15px;
+}
+
+.container_two_in_line {
+    display: flex;
+    flex-wrap: wrap;
+
+}
+.container_two_in_line>* {
+    flex: 1 1 165px;
+    background-color: white;
+    justify-content: center;
+    border-radius: 16px;
+    text-align: center;
+    margin-left:  10px;
+    margin-right: 10px;
+    margin-bottom: 20px;
+    padding: 20px 20px;
+}
+
+
+
+
+
+
+
+
+.yellow {
+    background-color: #FFCB2E;
+}
+.orange {
+    color: #FD6363;
+}
