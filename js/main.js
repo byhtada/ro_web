@@ -18,6 +18,7 @@ $( document ).ready(function() {
     //work_mode = 'prod'
 
 
+    let img_url = "https://parentsapp.github.io"
 
 
     let diary_materials = [
@@ -77,7 +78,7 @@ $( document ).ready(function() {
 
             html += `
                     <div class="card_product" data-id="${item.id}">
-                        <img src="${item.photos[0]}"/>
+                        <img src="${img_url}${item.photos[0]}"/>
                         <div class="price">${formatNum(item.price)} ₽</div>
                         <div class="name">${name}</div>
                         <div class="stat_container">
