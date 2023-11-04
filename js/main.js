@@ -18,7 +18,7 @@ $( document ).ready(function() {
     //work_mode = 'prod'
 
 
-    let img_url = "https://parentsapp.github.io"
+    let img_url = "https://parentsapp.github.io/parents_web"
 
 
     let diary_materials = [
