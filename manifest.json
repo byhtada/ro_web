@@ -1,6 +1,6 @@
 {
-  "short_name": "Assistant",
-  "name": "Margii's Assistant",
+  "short_name": "ParentApp",
+  "name": "ParentApp",
   "theme_color": "#FFFFFF",
   "background_color": "#FFFFFF",
   "display": "standalone",

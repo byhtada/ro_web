@@ -8,16 +8,14 @@ $( document ).ready(function() {
 
     var api_url = "http://localhost:3000/";
     let work_mode = 'dev'
-    if (window.location.href.includes("yourpartners")) {
+    if (window.location.href.includes("github")) {
         work_mode = 'prod'
     }
-    if (work_mode == 'prod') {
-        api_url = "https://yp-api.herokuapp.com/"
-    }
+   // if (work_mode == 'prod') {
+        api_url = "https://damp-river-16716-1ebf02a83111.herokuapp.com/"
+  //  }
     //api_url = "https://yp-api.herokuapp.com/"
     //work_mode = 'prod'
-
-// Create an instance of CircleProgress element
 
 
 
@@ -158,7 +156,7 @@ $( document ).ready(function() {
 
                 setDiary()
                 setDiaryMaterials()
-                setProducts(main_data.products)
+
 
                 setProgress()
             })
@@ -663,6 +661,10 @@ $( document ).ready(function() {
 
         if (page == "") {
             page = "main";
+        }
+
+        if (page == "shop"){
+            setProducts(main_data.products)
         }
 
         $('.icon_main')    .addClass("inactive");
