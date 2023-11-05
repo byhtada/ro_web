@@ -3,17 +3,68 @@ console.log( "window loaded" );
 
 $( document ).ready(function() {
 
+    let scroll_updated = false
+    window.onscroll = function (e) {
+
+        if (scroll_updated) {
+            return
+        }
+
+        var body = document.body,
+            html = document.documentElement;
+
+        var height = Math.max( body.scrollHeight, body.offsetHeight,
+            html.clientHeight, html.scrollHeight, html.offsetHeight )
+
+      //  console.log(height - window.screen.height - window.scrollY); // Value of scroll Y  in px
+
+        if (height - window.screen.height - window.scrollY <= 500) {
+            console.log("update")
+            scroll_updated = true
+
+            if (document.getElementById('list_fables').style.display == "block") {
+                moreFables()
+            } else if (document.getElementById('list_lullabies').style.display == "block") {
+                moreLullabies()
+            }
+
+
+        }
+    }
+
+    function moreFables(){
+
+        sendRequest('post', 'get_more_fables', {current_fables: main_data.fables.length})
+            .then(data => {
+
+                addFables(data.fables)
+                scroll_updated = false
+            })
+            .catch(err => console.log(err))
+    }
+    function moreLullabies(){
+
+        sendRequest('post', 'get_more_lullabies', {current_lullabies: main_data.lullabies.length})
+            .then(data => {
+
+                addLullabies(data.lullabies)
+                scroll_updated = false
+            })
+            .catch(err => console.log(err))
+    }
+
+
 
     let cookie_token = ""
 
     var api_url = "http://localhost:3000/";
     let work_mode = 'dev'
-    if (window.location.href.includes("github")) {
+    if (window.location.href.includes("parents-app")) {
         work_mode = 'prod'
     }
-   // if (work_mode == 'prod') {
+    if (work_mode == 'prod') {
         api_url = "https://damp-river-16716-1ebf02a83111.herokuapp.com/"
-  //  }
+    }
     //api_url = "https://yp-api.herokuapp.com/"
     //work_mode = 'prod'
 
@@ -22,19 +73,19 @@ $( document ).ready(function() {
 
     let diary_materials = [
         {
-            name: "Объятия каждый день...",
+            name: "Объятия, это нечто большее...",
             time: "4 мин",
             likes: 25054,
             text: diary_hug
         },
         {
-            name: "Если хвалить ребенка каждый день...",
+            name: "Правильное использование похвалы",
             time: "8 мин",
             likes: 35321,
             text: diary_praise
         },
         {
-            name: "Почему так важно говорить о любви",
+            name: "Думать и говорить о любви",
             time: "7 мин",
             likes: 25054,
             text: diary_love
@@ -159,7 +210,7 @@ $( document ).ready(function() {
 
 
                 setProgress()
-
+                scroll_updated = false
                 document.getElementById('btn_today_fable').setAttribute("data-id", data.today_fable)
                 document.getElementById('btn_today_game').setAttribute("data-id", data.today_game)
             })
@@ -301,16 +352,24 @@ $( document ).ready(function() {
 
     //////////////          FABLES          /////////////////
     document.getElementById('btn_show_fables').addEventListener('click', function(){
+        scroll_updated = false
+        Array.from(document.getElementsByClassName('card_vertical')).forEach(element => {
+            element.classList.remove("active")
+        })
+        this.classList.add("active")
+
         setFables(main_data.fables)
-        let table = document.getElementById('list_wisdom')
-        table.style.display = 'block'
+
+        document.getElementById('list_fables').style.display = 'block'
+        document.getElementById('list_lullabies').style.display = 'none'
+
         $('html,body').animate({
             scrollTop: $(window).scrollTop() + 250
         });
     })
 
     function setFables(fables, favorite = false){
-        let table = document.getElementById('list_wisdom')
+        let table = document.getElementById('list_fables')
 
         let html = '<div class="btn_favorite btn_fable_favorite">ПОКАЗАТЬ ИЗБРАННОЕ</div>'
         if (favorite){
@@ -364,6 +423,61 @@ $( document ).ready(function() {
         }
 
     }
+    function addFables(fables, favorite = false){
+
+
+        let table = document.getElementById('list_fables')
+        let html = ''
+        fables.forEach(item => {
+            let icon = item.favorite ? "hearth_orange" : "hearth"
+
+            html += `<div class="list_item fable" data-id="${item.id}">
+<!--                        <img class="cover" src="${item.img}"/>-->
+                        <div>
+                            <div class="name">${item.name}</div>
+                            <div class="info">
+                                <div class="stat_container likes">
+                                    <img src="img/${icon}.svg"/>
+                                    ${formatNum(item.likes)}
+                                </div>
+                                <div class="stat_container">
+                                     <img src="img/clock.svg"/>
+                                    ${item.time}
+                                </div>
+                            </div>
+                        </div>
+
+<!--                        <img class="start" src="img/btn_play.png"/>-->
+                    </div>`
+        })
+        table.innerHTML += html
+
+        Array.from(table.getElementsByClassName("btn_fable_favorite")).forEach(function(element, i) {
+            if (i >= main_data.fables.length) {
+                element.addEventListener('click', showFableFavorites  )
+            }
+        })
+        Array.from(table.getElementsByClassName("btn_fable_all")).forEach(function(element, i) {
+            element.addEventListener('click', showFableAll  )
+        })
+        Array.from(table.querySelectorAll(".stat_container.likes")).forEach(function(element, i) {
+            element.addEventListener('click', clickFableFavorite  )
+        })
+
+        Array.from(table.getElementsByClassName("list_item")).forEach(function(element, i) {
+            element.addEventListener('click', openFable  )
+        });
+
+        main_data.fables = main_data.fables.concat(fables)
+
+        function openFable(){
+            let fable_id =  this.getAttribute("data-id")
+            let fable = main_data.fables.filter(item => {return item.id == fable_id})[0]
+
+            showFable(fable)
+        }
+
+    }
 
     function showFableFavorites(){
         setFables(main_data.fables.filter(item => {return item.favorite}), true)
@@ -376,16 +490,36 @@ $( document ).ready(function() {
         console.log("click0")
         e.stopPropagation()
         e.preventDefault()
-        console.log("click1")
-        addFableFavorite(this.parentElement.parentElement.parentElement.getAttribute("data-id"))
+
+        let fable_id = this.parentElement.parentElement.parentElement.getAttribute("data-id")
+
+        let new_status = this.querySelector('img').getAttribute("src").includes("orange") == false
+
+        console.log("this.innerText ", this.innerText)
+        let current_likes = main_data.fables.filter(item => {return item.id == fable_id})[0].likes
+        if (new_status) {
+            current_likes += 1
+        } else {
+            current_likes -= 1
+        }
+        main_data.fables.filter(item => {return item.id == fable_id})[0].likes = current_likes
+        let src = new_status ? "img/hearth_orange.svg" : "img/hearth.svg"
+
+        this.innerHTML = `<img src="${src}" /> ${formatNum(current_likes)}`
+
+
+
+
+
+        addFableFavorite(fable_id)
     }
 
     function addFableFavorite(fable_id){
 
         sendRequest('post', 'favorite_fable', {fable_id: fable_id})
             .then(data => {
-                main_data.fables = data.fables
-                setFables(main_data.fables)
+                //main_data.fables = data.fables
+                //setFables(main_data.fables)
             })
             .catch(err => console.log(err))
     }
@@ -393,16 +527,24 @@ $( document ).ready(function() {
 
     //////////////          LULLABIES          /////////////////
     document.getElementById('btn_show_lullabies').addEventListener('click', function(){
+        scroll_updated = false
+        Array.from(document.getElementsByClassName('card_vertical')).forEach(element => {
+            element.classList.remove("active")
+        })
+        this.classList.add("active")
+
         setLullabies(main_data.lullabies)
-        let table = document.getElementById('list_wisdom')
-        table.style.display = 'block'
+
+        document.getElementById('list_fables').style.display = 'none'
+        document.getElementById('list_lullabies').style.display = 'block'
+
         $('html,body').animate({
             scrollTop: $(window).scrollTop() + 250
         });
     })
 
     function setLullabies(lullabies, favorite = false){
-        let table = document.getElementById('list_wisdom')
+        let table = document.getElementById('list_lullabies')
 
         let html = '<div class="btn_favorite btn_lullabies_favorite">ПОКАЗАТЬ ИЗБРАННОЕ</div>'
         if (favorite){
@@ -451,9 +593,7 @@ $( document ).ready(function() {
         Array.from(table.getElementsByClassName("list_item")).forEach(function(element) {
             element.addEventListener('click', openLullaby  )
         });
-        function openLullaby(){
-            this.querySelector(".lullaby_content").style.display = "block"
-        }
+
 
 
         Array.from(table.getElementsByClassName("btn_lullabies_favorite")).forEach(function(element) {
@@ -467,6 +607,88 @@ $( document ).ready(function() {
         })
     }
 
+
+    function addLullabies(lullabies, favorite = false){
+        let table = document.getElementById('list_lullabies')
+
+        let html = ""
+
+        lullabies.forEach(item => {
+            let text = `<div id="lullaby_text">${item.text}</div>`
+            if (item.text == "") {
+                text= ""
+            }
+            let icon = item.favorite ? "hearth_orange" : "hearth"
+
+            html += `<div class="list_item lullaby" data-id="${item.id}">
+                        <div>
+                             <img class="start" src="img/btn_play.png"/>
+
+                             <div>
+                                <div class="name">${item.name}</div>
+                                <div class="info">
+                                    <div class="stat_container likes">
+                                        <img src="img/${icon}.svg"/>
+                                        ${formatNum(item.likes)}
+                                    </div>
+                                    <div class="stat_container time">
+                                         <img src="img/clock.svg"/>
+                                        ${item.time}
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                       <div class="lullaby_content">
+                            <audio id="lullaby_audio_player" class="samgiit_player" controls preload="none">
+                                <source id="lullaby_audio" src="${item.href}" type="audio/ogg">
+                            </audio>
+
+                            ${text}
+                        </div>
+                    </div>`
+        })
+
+        table.innerHTML += html
+
+        console.log("main_data.lullabies.length ", main_data.lullabies.length)
+
+        Array.from(table.getElementsByClassName("list_item")).forEach(function(element, i) {
+            console.log("i ", i)
+           // if (i >= main_data.lullabies.length) {
+                element.addEventListener('click', openLullaby  )
+          //  }
+        });
+
+
+        Array.from(table.getElementsByClassName("btn_lullabies_favorite")).forEach(function(element, i) {
+           // if (i >= main_data.lullabies.length) {
+                element.addEventListener('click', showLullabiesFavorites  )
+           // }
+        })
+        Array.from(table.getElementsByClassName("btn_lullabies_all")).forEach(function(element, i) {
+           // if (i >= main_data.lullabies.length) {
+                element.addEventListener('click', showLullabiesAll  )
+           // }
+        })
+        Array.from(table.querySelectorAll(".stat_container.likes")).forEach(function(element, i) {
+           // if (i >= main_data.lullabies.length) {
+                element.addEventListener('click', clickLullabiesFavorite  )
+          //  }
+        })
+
+        main_data.lullabies = main_data.lullabies.concat(lullabies)
+
+    }
+
+
+    function openLullaby(){
+        console.log("openLullaby")
+        const node = this.querySelector(".lullaby_content")
+        node.style.display = node.style.display == "block" ? "none" : "block"
+    }
+
     function showLullabiesFavorites(){
         setLullabies(main_data.lullabies.filter(item => {return item.favorite}), true)
     }
@@ -478,16 +700,33 @@ $( document ).ready(function() {
         console.log("click0")
         e.stopPropagation()
         e.preventDefault()
-        console.log("click1")
-        addLullabiesFavorite(this.parentElement.parentElement.parentElement.parentElement.getAttribute("data-id"))
+
+
+        let lullaby_id = this.parentElement.parentElement.parentElement.parentElement.getAttribute("data-id")
+
+        let new_status = this.querySelector('img').getAttribute("src").includes("orange") == false
+
+        console.log("this.innerText ", this.innerText)
+        let current_likes = main_data.lullabies.filter(item => {return item.id == lullaby_id})[0].likes
+        if (new_status) {
+            current_likes += 1
+        } else {
+            current_likes -= 1
+        }
+        main_data.lullabies.filter(item => {return item.id == lullaby_id})[0].likes = current_likes
+        let src = new_status ? "img/hearth_orange.svg" : "img/hearth.svg"
+
+        this.innerHTML = `<img src="${src}" /> ${formatNum(current_likes)}`
+
+
+        addLullabiesFavorite(lullaby_id)
     }
 
     function addLullabiesFavorite(lullaby_id){
 
         sendRequest('post', 'favorite_lullaby', {lullaby_id: lullaby_id})
             .then(data => {
-                main_data.lullabies = data.lullabies
-                setLullabies(main_data.lullabies)
+
             })
             .catch(err => console.log(err))
     }
