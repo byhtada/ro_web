@@ -697,7 +697,7 @@
 
 .pretty input:checked ~ .state.p-primary-o label:before,
 .pretty.p-toggle .state.p-primary-o label:before {
-    border-color: #FF7F5C;
+    border-color: transparent;
 }
 
 .pretty input:checked ~ .state.p-primary-o label:after,

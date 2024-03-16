@@ -7,31 +7,136 @@
 
 
 html {
-    color: white;
+    color: black;
     font-size: 1em;
     letter-spacing: 0.3px;
     line-height: 22px;
-
+    max-width: 480px;
+    min-width: 480px;
+    margin: 0 auto;
 }
 body {
     max-width: 480px;
     min-width: 480px;
-    font-family: 'Noto Sans';
+    font-family: 'Roboto';
     font-size: 16px;
-    background: #121419 url("../img/page_back/main.png") fixed ;
-
+    /*background: #0e0e0e url("../img/page_back/wisdom.png") no-repeat ;*/
+    background: #FFFFFF;
+    margin: 0 auto;
     height: 100%;
 }
 
 h1, h2, h3, h4, h5, h6 {
     text-align: center;
-    color: white;
-
-    margin-block-start: 0em;
-    margin-block-end: 0.3em;
+    color: black;
 }
+h2, h3 {
+    line-height: 38px;
+    color: #000;
+}
+
+h3 {
+    margin-top: 70px;
+}
+
 p {font-size: 18px;}
 
+
+.alert {
+    color: #d20000;
+    text-align: center;
+    display: none;
+}
+
+
+#page_load, #page_register {
+    display: flex;
+    flex-direction: column;
+    margin-top: 60px;
+    margin-bottom: 25px;
+    padding-left: 25px;
+    padding-right: 25px;
+    justify-content: center;
+    align-items: center;
+}
+#page_register, #page_main {
+    display: none;
+}
+
+.reg_pages {
+    width: -webkit-fill-available;
+}
+
+.content_background {
+    text-align: center;
+    padding: 20px;
+    font-size: 20px;
+}
+
+.logo_big {
+    width: 300px;
+    height: 300px;
+}
+.reg_pages {
+    display: none;
+}
+
+.container_link {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.container_link img {
+    width:  60px;
+    height: 60px;
+}
+
+label {
+    text-align: left;
+    margin-bottom: 5px;
+    display: block;
+}
+input[type="text"], input[type="number"], input[type="password"]  {
+    font-size: 18px;
+    text-align: left;
+    outline: none;
+    border-radius: 8px;
+
+    height: 42px !important;
+    border: 1px solid #999999;
+    background-color: transparent;
+    color: black;
+    resize: vertical;
+    width: -webkit-fill-available;
+    margin-bottom: 20px;
+    padding-left: 12px;
+}
+
+
+
+
+
+
+
+
+
+.link_app_block {
+    display: flex;
+    flex-direction: row;
+    padding: 10px 20px;
+    border: 1px solid #999999;
+    text-align: left;
+}
+.link_app_block .link_header {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.link_app_block img {
+   width: 50px;
+    margin-right: 20px;
+}
 
 .container_top {
     position: relative;
@@ -115,7 +220,7 @@ p {font-size: 18px;}
 }
 .circle-progress-value {
     stroke-width: 6px;
-    stroke: white;
+    stroke: black;
     stroke-linecap: round;
 }
 .circle-progress-circle {
@@ -149,7 +254,7 @@ p {font-size: 18px;}
     font-weight: bold;
     margin-bottom:  10px;
     padding-bottom: 15px;
-    border-bottom: 1px solid white;
+    border-bottom: 1px solid black;
 }
 .course_header div {
     flex: 1;
@@ -246,6 +351,11 @@ p {font-size: 18px;}
     height: 40px;
     margin-right: 15px;
 }
+.list_item.lullaby .like {
+    width: 40px;
+    height: 40px;
+    margin-left: 15px;
+}
 .list_item div {
     flex: 1
 }
@@ -264,6 +374,25 @@ p {font-size: 18px;}
     margin-top: unset;
 }
 
+.list_item.fable {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 22px;
+    border-radius: 8px;
+}
+.list_item.fable img {
+    width: 30px;
+}
+.list_item.fable div:first-child {
+    flex: 5;
+}
+.list_item.fable div:last-child {
+    justify-content: end;
+    display: flex;
+    width: 40px;
+}
+
 .list_item .info .stat_container {
     flex: 1;
     display: flex;
@@ -271,9 +400,7 @@ p {font-size: 18px;}
     align-items: center;
     color: #999999;
 }
-.list_item .info .stat_container:last-child {
-    justify-content: right;
-}
+
 
 
 .list_item .info .stat_container img {
@@ -336,41 +463,73 @@ p {font-size: 18px;}
 
 
 
-#page_fable,  #page_game ,  #page_diary_material ,  #page_product,  #page_progress {
+
+.user_gender {
+    border: 1px solid #999999;
+    padding: 10px 20px;
+    flex: 1;
+    text-align: center;
+    border-radius: 8px;
+
+}
+.user_gender[data-type="male"] {
+    margin-right: 20px;
+}
+
+.user_gender.active {
+    border: 1px solid #FF7F5C;
+}
+
+.btn_register {
+
+    border-radius: 8px;
+    padding: 10px 20px;
+    flex: 1;
+    text-align: center;
+    border: 1px solid #000;
+    margin-top: 20px;
+}
+
+
+.app_android {
+    position: fixed;
     display: none;
-    position: absolute;
-    z-index: 100;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
+    justify-content: center;
+    align-items: center;
+    bottom: 140px;
+    left: 20px;
+    padding: 10px;
+    padding-left: 15px;
 
+    border: 1px solid #999999;
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.63);
+    width: unset;
 }
-#page_fable {
-    background: #121419 url("../img/page_back/fable.png") fixed ;
-}
-#page_game {
-    background: #121419 url("../img/page_back/games.png") fixed ;
-}
-#page_diary_material {
-    color: white !important;
-    padding-left: 30px;
-    padding-right: 30px;
-    background: #121419 url("../img/page_back/diary.png") fixed ;
-}
-#page_product {
-    color: white !important;
-    background: #121419 url("../img/page_back/shop.png") fixed ;
-}
-#page_product .block {
-    margin-right: 0px;
-    margin-left: 0px;
+.app_android img {
+    width: 40px;
 }
 
-#page_diary_material h3{
+.app_ios {
+    position: fixed;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    bottom: 225px;
+    left: 20px;
+    padding: 10px;
+    padding-left: 13px;
+    padding-right: 11px;
 
-    text-align: left;
+    border: 1px solid #999999;
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.63);
+    width: unset;
 }
+.app_ios img {
+    width: 40px;
+}
+
 
 #page_diary_material .list_item .name {
     text-align: left !important;
@@ -435,8 +594,219 @@ p {font-size: 18px;}
 }
 
 
+#container_fables, #container_lullabies { display: none; }
 
 
+.div_wisdom_actions {
+    display: flex;
+    flex-direction: row;
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.div_wisdom_actions div {
+    padding: 10px;
+    border: 1px solid #999999;
+    border-radius: 16px;
+    display: flex;
+}
+.div_wisdom_actions .show_favorite {
+
+}
+.div_wisdom_actions .show_favorite.active {
+    border: 1px solid #FF7F5C;
+}
+.div_wisdom_actions .show_favorite, .div_wisdom_actions .get_random {
+    margin-right: 20px;
+    justify-content: center;
+    align-items: center;
+}
+.div_wisdom_actions   img {
+    width:  40px;
+    height: 40px;
+}
+.container_search img {
+    margin-right: 10px;
+    margin-left:  10px;
+    width:  30px;
+    height: 30px;
+
+}
+.div_wisdom_actions .container_search {
+    width: 273px;
+    align-items: center;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.landing_container {
+    margin-right: 20px;
+    margin-left: 20px;
+
+}
+
+
+
+#montessori_people {
+    display: flex;
+    flex-direction: row;
+    flex-flow: wrap;
+}
+#montessori_people > div {
+    width: 218px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#montessori_people img {
+    width:  150px;
+    height: 150px;
+    border-radius: 150px;
+}
+
+#btn_more_people {
+    margin-top: 10px;
+    text-align: center;
+    color: #FF7F5C;
+}
+
+
+#montessori_people_full .list_item {
+    display: flex;
+    flex-direction: row;
+    padding: 10px 20px;
+    border: 1px solid #999999;
+    text-align: left;
+    background-color: rgba(0, 0, 0, 0.62);
+    border-radius: 8px;
+    align-items: center;
+    font-size: 14px;
+}
+
+
+#montessori_people_full .list_item img {
+    width:  120px;
+    height: 120px;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+.person_name {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+
+.div_simple_item {
+    display: flex; flex-direction: column; align-items: center;
+}
+.container_simple_item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 20px;
+    padding: 10px 20px;
+    border: 1px solid #999999;
+    background-color: rgba(0, 0, 0, 0.62);
+    border-radius: 8px;
+
+}
+
+.container_simple_item div:first-child {
+    font-size: 30px;
+    font-weight: bold;
+    margin-right: 20px;
+}
+
+.div_simple_item .container_simple_item {
+
+    width: fit-content;
+}
+.container_simple_item .container_simple_item div:first-child {
+    font-size: 20px;
+    font-weight: bold;
+    margin-right: 15px;
+}
+
+
+.container_why_we {
+    display: flex;
+    flex-direction: row;
+    margin-top: 20px;
+    padding: 10px 20px;
+    border: 1px solid #999999;
+    background-color: rgba(0, 0, 0, 0.62);
+    border-radius: 8px;
+}
+
+.container_why_we img {
+    width: 40px;
+    margin-right: 20px;
+}
+
+
+
+.course_block {
+    margin-top: 30px;
+
+    border: 1px solid #999999;
+    background-color: rgba(0, 0, 0, 0.62);
+    border-radius: 8px;
+}
+
+
+.course_block .course_header {
+    font-size: 28px;
+    background-color: #d55634;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    text-align: center;
+    padding: 20px;
+    justify-content: center;
+}
+.course_block .course_topic {
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.course_block .course_topic:last-child {
+    margin-bottom: 20px;
+}
+.course_block .course_topic img {
+    width: 30px;
+    margin-right: 20px;
+}
+.course_block .course_info{
+
+    flex: 1;
+}
+.course_block .course_info div:first-child{
+    font-size: 18px;
+}
+.course_block .course_info div:last-child{
+    color: #999999;
+}
 
 
 
@@ -486,7 +856,7 @@ p {font-size: 18px;}
     margin-bottom: 10px;
 }
 .card_name div:last-child {
-    color: white;
+    color: black;
     font-weight: bold;
 }
 .card_name div:first-child {
@@ -495,7 +865,6 @@ p {font-size: 18px;}
 }
 
 [data-page="wisdom"] .card_name{
-
     display: flex;
     justify-content: space-between;
 }
@@ -553,7 +922,7 @@ p {font-size: 18px;}
     justify-content: center;
     align-items: center;
     background-color: #CC0DAC;
-    color: white;
+    color: black;
     border-radius: 8px;
     font-weight: bold;
 
@@ -661,7 +1030,7 @@ p {font-size: 18px;}
 .bottom_bar {
     position: fixed;
     bottom: 0;
-    left: 0;
+
     width: 100%;
     height: 100px;
     display: flex;
@@ -669,6 +1038,10 @@ p {font-size: 18px;}
     background-color: #171717;
     border-radius: 18px 18px 0 0 !important;
     z-index: 99;
+    max-width: 480px;
+    min-width: 480px;
+    left: 50% !important;
+    margin-left: -240px;
 }
 
 .bottom_bar .icon_main {
@@ -782,7 +1155,7 @@ a.nav_bottom.active div {
 }
 .container_two_in_line>* {
     flex: 1 1 165px;
-    background-color: white;
+    background-color: black;
     justify-content: center;
     border-radius: 16px;
     text-align: center;
@@ -799,25 +1172,11 @@ a.nav_bottom.active div {
     display: none;
 
 }
-.parent_page[data-page="main"] {
+.parent_page[data-page="wisdom"] {
     display: block;
 }
 
-.content_background {
-    padding-bottom: 120px;
 
-    box-shadow: 0px 0px 50px 50px rgb(19,19,19 );
-    border-top: 1px solid rgb(19,19,19 );
-    background: rgb(19,19,19);
-
-}
-
-#page_fable .content_background {
-    padding-bottom: 520px;
-}
-#page_game .content_background {
-    padding-bottom: 120px;
-}
 
 
 
@@ -860,6 +1219,10 @@ a.nav_bottom.active div {
 
 }
 
+#page_parent {
+    display: none;
+}
+
 .card_diary .header {
     font-weight: bold;
     font-size: 22px;
@@ -868,6 +1231,64 @@ a.nav_bottom.active div {
     margin-bottom: 10px;
 }
 
+#div_progress {
+    display: none;
+}
+
+#page_admin {
+    padding: 20px;
+}
+.container_text_vertical {
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+
+    margin-bottom: 20px;
+}
+
+.container_text_vertical > div {
+    flex: 1
+}
+
+
+#div_app_instruction {
+    display: none;
+    text-align: center;
+}
+#btn_hide_instruction {
+    border: 1px solid #999999;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    margin: 20px;
+}
+.btn_app_instruction {
+    border: 1px solid #999999;
+    border-radius: 8px;
+    padding: 5px 10px;
+    flex: 1;
+    text-align: center;
+
+    margin: 20px;
+}
+
+
+#list_users > div {
+    border: 1px solid #999999;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 16px;
+    display: flex;
+    justify-content: space-between;
+
+}
+
+#page_apps img {
+    width: 100%;
+    margin-bottom: 20px;
+}
 
 * {
     box-sizing: border-box;
@@ -880,8 +1301,11 @@ a.nav_bottom.active div {
 .input-group {
     display: flex;
     flex: 1;
-
+    font-size: 20px;
     margin-top: 20px;
+}
+.input-group .pretty {
+    font-size: 18px;
 }
 
 .checkbox {
@@ -964,4 +1388,63 @@ a.nav_bottom.active div {
 }
 .orange {
     color: #FD6363;
+}
+
+
+
+main {
+    margin-top: 500px;
+    padding-bottom: 120px;
+    box-shadow: 0px 0px 50px 50px rgb(19,19,19 );
+    border-top: 1px solid rgb(19,19,19 );
+    background: rgb(19,19,19);
+}
+main img {
+    width: 100%;
+    border-radius: 8px;
+}
+nav a {
+
+    background-color: rgba(0, 0, 0, 0.62);
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    margin-top: 20px;
+    border: 1px solid #999999;
+    width: 100%;
+    color: black;
+    text-decoration: unset;
+}
+
+h1 {
+    line-height: 32px;
+    padding: 20px;
+    text-align: center;
+}
+
+article {
+    margin-left: 20px;
+    margin-right: 20px;
+    font-size: 18px;
+    margin-bottom: 70px;
+}
+
+nav {
+    display: flex;
+    flex-direction: column;
+
+    margin-left: 20px;
+    margin-right: 20px;
+}
+/*main nav a:first-child {*/
+/*    border: 1px solid #FF7F5C;*/
+/*}*/
+.bottom_bar .nav_bottom {
+    border: unset !important;
+    background-color: unset !important;
+    border-radius: unset !important;
+
+}
+.bottom_bar .nav_bottom img {
+    border-radius: unset !important;
 }
